@@ -1,0 +1,9 @@
+[devshell]
+packages = [
+  "go",
+  "gopls"
+]
+
+[[commands]]
+package = "devshell.cli"
+help = "Per project developer environments"
