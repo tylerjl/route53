@@ -3,6 +3,7 @@ package route53
 import (
 	"context"
 	"fmt"
+	"os"
 	"strconv"
 	"time"
 
@@ -94,6 +95,11 @@ func (p *Provider) getRecords(ctx context.Context, zoneID string, zone string) (
 }
 
 func (p *Provider) getZoneID(ctx context.Context, zoneName string) (string, error) {
+	envZone, envPresent := os.LookupEnv("AWS_HOSTED_ZONE_ID")
+	if envPresent {
+		return envZone, nil
+	}
+
 	getZoneInput := &r53.ListHostedZonesByNameInput{
 		DNSName:  aws.String(zoneName),
 		MaxItems: aws.String("1"),
